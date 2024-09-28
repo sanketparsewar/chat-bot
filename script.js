@@ -7,7 +7,7 @@ const deleteChatButton = document.querySelector("#delete-chat-button");
 let userMessage = null;
 let isResponseGenerating = false;
 //Api configuration
-const API_KEY = `$env{API_KEY}`;
+const API_KEY = process.env.API_KEY;
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
 const localStorageData = () => {
