@@ -1,0 +1,354 @@
+/* import google fonts - poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+* {
+  font-family: "Poppins", system-ui;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* dark mode colors */
+  --text-color: white;
+  --subheading-color: grey;
+  --placeholder-color: rgb(159, 156, 156);
+  --primary-color: rgb(29, 29, 29);
+  --secondary-color: rgb(52, 52, 52);
+  --secondary-hover-color: rgb(84, 84, 84);
+}
+
+.light_mode {
+  /* light mode colors */
+  --text-color: rgb(29, 29, 29);
+  --subheading-color: rgb(117, 113, 113);
+  --placeholder-color: rgb(95, 93, 93);
+  --primary-color: white;
+  --secondary-color: rgb(201, 199, 199);
+  --secondary-hover-color: rgb(235, 231, 231);
+}
+
+body {
+  background: var(--primary-color);
+}
+
+.header,
+.typing-area {
+  color: var(--text-color);
+}
+
+.header,
+.chat-list .message,
+.typing-form {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-top: 7vh;
+  padding: 1rem;
+}
+
+body.hide-header .header {
+  display: none;
+  margin-top: 0;
+}
+
+/* this will select the multiple classes and can give the properties */
+.header :where(.title, .subtitle) {
+  font-weight: 500;
+  line-height: 3.6rem;
+}
+
+.header .title {
+  font-size: 2.7rem;
+  width: fit-content;
+  /* this will select the area behind the text  */
+  background-clip: text;
+  /* this will give the linear gradiant color to the background that we have selected */
+  background: linear-gradient(to right, rgb(6, 141, 238), rgb(255, 85, 0));
+  /* this will give the color to the text and makes the background the transparent */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header .subtitle {
+  font-size: 2.4rem;
+  color: var(--subheading-color);
+}
+
+.suggestion-list {
+  margin-top: 9.5vh;
+  list-style: none;
+  display: flex;
+  /* this will give us the scrolling bar for the x axis  */
+  /* here the suggestion list is made to scroll in x axis  */
+  overflow-x: auto;
+  /* this will hide the scrolling bar */
+  scrollbar-width: none;
+  gap: 1.25rem;
+}
+
+.suggestion-list .suggestion {
+  padding: 1.25rem;
+  cursor: pointer;
+  width: 227px;
+  /* this will not shrin the box to the size to fit */
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-radius: 0.75rem;
+  background-color: var(--secondary-color);
+}
+
+.suggestion-list .suggestion:hover {
+  background: var(--secondary-hover-color);
+}
+
+.suggestion-list .suggestion .text {
+  font-weight: 400;
+}
+
+.suggestion-list .suggestion .icon {
+  height: 42px;
+  width: 42px;
+  font-size: 1.3rem;
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  background: var(--primary-color);
+}
+
+.chat-list {
+  padding: 2rem 1rem 12rem;
+  max-height: 100vh;
+  overflow: auto;
+  scrollbar-color: #999 transparent;
+}
+
+/* this means the element that has the message incoming class */
+.chat-list .message.incoming {
+  margin-top: 1.5rem;
+}
+
+.chat-list .message .message-content {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+  align-items: center;
+}
+
+.chat-list .message .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  align-self: flex-start;
+}
+/* here we are giving the animation to the avatar */
+.chat-list .message.loading .avatar {
+  animation: rotate 3s linear infinite;
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.chat-list .message .text {
+  color: var(--text-color);
+}
+.chat-list .message .text.error{
+  color: rgb(246, 18, 18);
+}
+
+.chat-list .message.loading .text {
+  display: none;
+}
+
+.chat-list .message .icon {
+  height: 35px;
+  width: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 3.5rem;
+  font-size: 1.25rem;
+  background: var(--secondary-color);
+  color: var(--text-color);
+  visibility: hidden;
+}
+
+/* here copy button will only disply when the text appears in that box bot while loading bars */
+.chat-list .message:not(.loading):hover .icon:not(.hide) {
+  visibility: visible;
+}
+
+.chat-list .message .icon:hover {
+  background: var(--secondary-color);
+}
+.chat-list .loading-indicator {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+/* only show loading bars if message content contains loading class */
+.chat-list .message.loading .loading-indicator {
+  display: flex;
+}
+
+.chat-list .loading-indicator .loading-bar {
+  height: 11px;
+  width: 100%;
+  border-radius: 0.14rem;
+  background: linear-gradient(
+    to right,
+    rgb(9, 178, 239),
+    var(--primary-color),
+    rgb(0, 187, 255)
+  );
+  /* this is written to give the animation to the loading bars */
+  animation: animate 3s linear infinite;
+}
+
+.chat-list .loading-indicator .loading-bar:last-child {
+  width: 70%;
+}
+
+@keyframes animate {
+  0% {
+    background-position: -800px 0;
+  }
+  100% {
+    background-position: 800px 0;
+  }
+}
+
+.typing-area {
+  /* this will make the postion fix to the bottom of the page */
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  padding: 1rem;
+  background: var(--primary-color);
+}
+
+.typing-area :where(.typing-form, .action-buttons) {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.typing-area .input-wrapper {
+  height: 56px;
+  width: 100%;
+  display: flex;
+  /* making this realative make the parent of input wrapper class and making the position as absolute of .input wrapper  .icon class insert the icon inside the input field */
+  position: relative;
+}
+
+.typing-area .typing-input {
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: var(--text-color);
+  border-radius: 6.2rem;
+  padding: 1.1rem 4rem 1.1rem 1.5rem;
+  background: var(--secondary-color);
+}
+
+/* when we click on the input field to write the text then the backgroud color of the input field changes  */
+.typing-area .typing-input:focus {
+  background-color: var(--secondary-hover-color);
+}
+
+/* this is used to set the color for the placeholder */
+.typing-area .typing-input::placeholder {
+  color: var(--placeholder-color);
+}
+
+.typing-area .icon {
+  height: 56px;
+  width: 56px;
+  display: flex;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  border-radius: 50%;
+  background: var(--secondary-color);
+}
+
+.typing-area .icon:hover {
+  /* as we have set the background of the send icon as none so even if we hover then the background color doesnot changes */
+  /* but here we are making the property set in the hover as importat so even if we set the background as none the hover property gets effect and the background color gets change on hover */
+  background: var(--secondary-hover-color) !important;
+}
+
+.typing-area .input-wrapper .icon {
+  /* this will act upon position with respect to the postition made relative
+so here the send icon goes inside the input field as we have set the right 0 */
+  position: absolute;
+  right: 0;
+  background: none;
+  /* this will hide the send icon */
+  transform: scale(0);
+  /* this will make visisble send icon with transition ease after writing any text inside the input field */
+  transition: transform 0.2s ease;
+}
+
+/* this will check whether the is text present inside the input field or not */
+.typing-area .input-wrapper .typing-input:valid ~ .icon {
+  transform: scale(1);
+}
+
+.disclaimer-text {
+  font-size: 0.85rem;
+  margin-top: 1rem;
+  text-align: center;
+  color: var(--placeholder-color);
+}
+
+
+
+/* Responsive media query code for the small divices */
+@media (max-width:768px) {
+  .header :is(.title,.subtitle){
+    font-size: 2rem;
+    line-height: 2.6rem;
+  }
+  .header .subtitle{
+    font-size: 1.7rem;
+  }
+  .chat-list .message .avatar{
+    width: 37px;
+    height: 37px;
+  }
+  .typing-area :where(.typing-form, .actions-button){
+    gap: 0.4rem;
+  }
+  .typing-form .input-wrapper{
+    height: 50px;
+  }
+  .typing-form .typing-input{
+    padding: 1.1rem 3.5rem 1.1rem 1.2rem;
+  }
+  .typing-area .icon{
+    height: 50px;
+    width: 50px;
+  }
+  .typing-area .disclaimer-text{
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+  }
+}
